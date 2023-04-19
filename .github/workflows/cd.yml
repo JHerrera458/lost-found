@@ -1,5 +1,4 @@
 name: CD
-
 on:
   push:
     branches: ['master']
@@ -21,7 +20,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: jherrera458/usr/src/nuxt-app
+          images: jherrera458/lost-found
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
