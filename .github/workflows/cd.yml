@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: jherrera458/found-lost
+          images: jherrera458/nuxt-app
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
