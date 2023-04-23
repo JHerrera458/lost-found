@@ -20,7 +20,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: jherrera458/lost-found
+          images: julianh458/lost-found
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
