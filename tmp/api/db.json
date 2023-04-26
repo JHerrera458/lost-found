@@ -34,16 +34,73 @@
   "lostObjects": [
     {
       "name": "IphoneXR",
-      "description": "Tiene funda negra y un sticker",
-      "foundPlace": "Bloque 12, Salón 4-12",
+      "description": "Celular rojo",
+      "foundPlace": "Bloque 14, salon 1-123",
       "category": {
         "name": "Celulares",
         "description": "Dispositivo movil de uso personal",
         "id": 1
       },
       "createdBy": 1,
-      "createDate": "2023-04-26T20:36:17.521Z",
+      "createDate": "2023-04-26T20:43:17.662Z",
+      "isFound": false,
       "id": 1
+    },
+    {
+      "name": "Celular NOKIA",
+      "description": "Tiene un llaverito",
+      "foundPlace": "Prometeo",
+      "category": {
+        "name": "Celulares",
+        "description": "Dispositivo movil de uso personal",
+        "id": 1
+      },
+      "createdBy": 1,
+      "createDate": "2023-04-26T20:45:00.926Z",
+      "isFound": false,
+      "id": 2
+    },
+    {
+      "name": "Cédula de ciudadanía",
+      "description": "Nombre: Pepito Perez",
+      "foundPlace": "Coliseo",
+      "category": {
+        "name": "Documento",
+        "description": "Documentos personales. Ej: CC, TI, tarjetas, etc",
+        "id": 3
+      },
+      "createdBy": 1,
+      "createDate": "2023-04-26T20:54:18.903Z",
+      "isFound": false,
+      "id": 3
+    },
+    {
+      "name": "Billetera EDIT",
+      "description": "Cuero negro",
+      "foundPlace": "Cafeteria bloque 4",
+      "category": {
+        "name": "Documento",
+        "description": "Documentos personales. Ej: CC, TI, tarjetas, etc",
+        "id": 3
+      },
+      "createdBy": 1,
+      "createDate": "2023-04-26T20:54:18.903Z",
+      "isFound": false,
+      "id": 4
+    },
+    {
+      "name": "Nuevo objeto",
+      "description": "Descripción",
+      "foundPlace": "Prometeo",
+      "category": {
+        "name": "Celulares",
+        "description": "Dispositivo movil de uso personal",
+        "id": 1
+      },
+      "createdBy": 1,
+      "createDate": "2023-04-26T20:54:18.903Z",
+      "isFound": false,
+      "id": 5
     }
   ],
   "objectCategories": [
