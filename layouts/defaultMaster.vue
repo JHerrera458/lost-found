@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/first-attribute-linebreak -->
 <template>
-  <v-app light>
-    <v-main light>
+  <v-app dark>
+    <v-main>
       <v-app-bar absolute color="#005b96" prominent>
         <v-app-bar-nav-icon @click="drawer = true" />
         <v-toolbar-title>

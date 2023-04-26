@@ -25,13 +25,14 @@
                         @click="createObject"><v-icon>mdi-upload</v-icon></v-btn>
                     <v-btn class="yellow darken-1 white--text" :disabled="!editing"
                         @click="updateObject"><v-icon>mdi-pencil</v-icon></v-btn>
-                    <v-btn class="red white--text" :disabled="!editing"><v-icon>mdi-delete</v-icon></v-btn>
+                    <v-btn class="red white--text" :disabled="!editing"
+                        @click="deleteObject"><v-icon>mdi-delete</v-icon></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
         <v-row>
             <v-col cols="12">
-                <v-btn color="light-blue darken-4">
+                <v-btn color="green">
                     <h2 @click="openDialog()">Registrar un nuevo objeto perdido</h2>
                 </v-btn>
             </v-col>
@@ -170,6 +171,40 @@ export default {
                 })
             }).finally(() => {
                 this.loading = false
+            })
+        },
+        deleteObject() {
+            this.$swal.fire({
+                title: `¿Seguro de eliminar el objeto: ${this.registerObject.name}? con ID: ${this.updateId}`,
+                text: 'El objeto se eliminará y no se puede recuperar',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const url = `${process.env.URL_DEV}/lostObjects/${this.updateId}`
+                    this.loading = true
+                    this.$axios.delete(url).then((response) => {
+                        this.$swal.fire({
+                            title: 'Objeto eliminado',
+                            text: `El objeto ${this.registerObject.name} ID: ${this.updateId} se ha eliminado.`,
+                            icon: 'success',
+                        })
+                        this.loadObjects()
+                        this.dialogCreateObject = false
+                        this.editing = false
+                    }).catch(() => {
+                        this.$swal.fire({
+                            title: 'Error!',
+                            text: 'Ha ocurrido un error eliminando el objeto.',
+                            icon: 'error',
+                        })
+                    }).finally(() => {
+                        this.loading = false
+                    })
+                }
             })
         }
     }

@@ -15,22 +15,22 @@
           <v-card-text>
             <v-img src="/defaultProfile.jpg" width="450px" height="350px">
             </v-img>
-            <span class="title">ID: </span>
+            <h2 class="title">ID: </h2>
             {{ currentAccount.id }}
             <br />
-            <span class="title">Nombre: </span>
+            <h2 class="title">Nombre: </h2>
             {{ currentAccount.name }}
             <br />
-            <span class="title">Apellido: </span>
+            <h2 class="title">Apellido: </h2>
             {{ currentAccount.lastName }}
             <br />
-            <span class="title">Número de celular: </span>
+            <h2 class="title">Número de celular: </h2>
             {{ currentAccount.phoneNumber }}
             <br />
-            <span class="title">Email: </span>
+            <h2 class="title">Email: </h2>
             {{ currentAccount.email }}
             <br />
-            <span class="title">Rol: </span>
+            <h2 class="title">Rol: </h2>
             {{ currentAccount.role }}
             <br />
           </v-card-text>
@@ -84,7 +84,6 @@
               </v-img>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="#005b96" dark @click="showDescription(account)">Detalles</v-btn>
               <v-btn color="yellow darken-1" dark @click="loadAccountToUpdate(account)">Editar</v-btn>
               <v-btn color="red" dark :disabled="account.id == session.id ? true : false" @click="deleteAccount(account)">Eliminar</v-btn>
             </v-card-actions>
@@ -267,5 +266,8 @@ export default {
 <style>
 .spacer {
   margin-bottom: 120px;
+}
+.title {
+  color: black;
 }
 </style>

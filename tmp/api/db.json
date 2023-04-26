@@ -1,7 +1,7 @@
 {
   "accounts": [
     {
-      "name": "JuliánEDIT",
+      "name": "Julián",
       "lastName": "Herrera Leal",
       "phoneNumber": "3015225831",
       "email": "juliann4567@gmail.com",
@@ -24,7 +24,7 @@
       "name": "Santiago",
       "lastName": "Urrego",
       "phoneNumber": "111",
-      "email": "pipeghdez@gmail.com",
+      "email": "santiago@gmail.com",
       "password": "12345",
       "role": 0,
       "createDate": "2023-04-25T23:06:10.921Z",
@@ -61,46 +61,18 @@
       "id": 2
     },
     {
-      "name": "Cédula de ciudadanía",
-      "description": "Nombre: Pepito Perez",
-      "foundPlace": "Coliseo",
+      "name": "Dinero ($30.000)",
+      "description": "1 billete de 20.000\n2 billetes de 10.000",
+      "foundPlace": "Cafeteria derecho",
       "category": {
-        "name": "Documento",
-        "description": "Documentos personales. Ej: CC, TI, tarjetas, etc",
-        "id": 3
+        "name": "Dinero",
+        "description": "Efectivo que se haya perdido",
+        "id": 2
       },
       "createdBy": 1,
       "createDate": "2023-04-26T20:54:18.903Z",
       "isFound": false,
       "id": 3
-    },
-    {
-      "name": "Billetera EDIT",
-      "description": "Cuero negro",
-      "foundPlace": "Cafeteria bloque 4",
-      "category": {
-        "name": "Documento",
-        "description": "Documentos personales. Ej: CC, TI, tarjetas, etc",
-        "id": 3
-      },
-      "createdBy": 1,
-      "createDate": "2023-04-26T20:54:18.903Z",
-      "isFound": false,
-      "id": 4
-    },
-    {
-      "name": "Nuevo objeto",
-      "description": "Descripción",
-      "foundPlace": "Prometeo",
-      "category": {
-        "name": "Celulares",
-        "description": "Dispositivo movil de uso personal",
-        "id": 1
-      },
-      "createdBy": 1,
-      "createDate": "2023-04-26T20:54:18.903Z",
-      "isFound": false,
-      "id": 5
     }
   ],
   "objectCategories": [
