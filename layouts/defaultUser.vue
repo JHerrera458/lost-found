@@ -1,7 +1,6 @@
-<!-- eslint-disable vue/first-attribute-linebreak -->
 <template>
   <v-app light>
-    <v-main light>
+    <v-main>
       <v-app-bar absolute color="#005b96" prominent>
         <v-app-bar-nav-icon @click="drawer = true" />
         <v-toolbar-title>
@@ -38,7 +37,7 @@
 
 <script>
 export default {
-  name: 'DefaultLayout',
+  name: 'LayoutUser',
   data() {
     return {
       drawer: false,
@@ -47,18 +46,8 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Inicio',
-          to: '/masters/home',
-        },
-        {
-          icon: 'mdi-archive',
-          title: 'Registrar objetos perdidos',
-          to: '/masters/manageObjects'
-        },
-        {
-          icon: 'mdi-account-group',
-          title: 'Administrar cuentas',
-          to: '/masters/manageProfile',
-        },
+          to: '/users/home',
+        }
       ],
     }
   },
