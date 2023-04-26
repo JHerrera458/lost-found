@@ -39,11 +39,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              class="light-blue darken-4"
-              text
-              @click="dialogDetails = false"
-            >
+            <v-btn class="light-blue darken-4" text @click="dialogDetails = false">
               Cerrar
             </v-btn>
           </v-card-actions>
@@ -54,57 +50,20 @@
           <v-card-title> Editar cuenta </v-card-title>
           <v-card-text>
             <v-form ref="">
-              <v-text-field
-                v-model="editInfo.name"
-                :rules="[rules.required]"
-                name="name"
-                label="Nombre"
-                outlined
-                prepend-icon="mdi-account"
-              />
-              <v-text-field
-                v-model="editInfo.lastName"
-                :rules="[rules.required]"
-                name="lastName"
-                label="Apellido"
-                outlined
-                prepend-icon="mdi-account"
-              />
-              <v-text-field
-                v-model="editInfo.phoneNumber"
-                :rules="[rules.required]"
-                name="number"
-                label="Número de celular"
-                outlined
-                prepend-icon="mdi-phone"
-              />
-              <v-text-field
-                v-model="editInfo.email"
-                :rules="[rules.required, rules.email]"
-                name="email"
-                label="Correo electrónico"
-                outlined
-                prepend-icon="mdi-email"
-              />
-              <v-text-field
-                v-model="editInfo.password"
-                :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="visiblePass ? 'text' : 'password'"
-                :rules="[rules.required]"
-                name="password"
-                label="Contraseña"
-                outlined
-                prepend-icon="mdi-lock"
-                @click:append="visiblePass = !visiblePass"
-              />
+              <v-text-field v-model="editInfo.name" :rules="[rules.required]" name="name" label="Nombre" outlined
+                prepend-icon="mdi-account" />
+              <v-text-field v-model="editInfo.lastName" :rules="[rules.required]" name="lastName" label="Apellido"
+                outlined prepend-icon="mdi-account" />
+              <v-text-field v-model="editInfo.phoneNumber" :rules="[rules.required]" name="number"
+                label="Número de celular" outlined prepend-icon="mdi-phone" />
+              <v-text-field v-model="editInfo.email" :rules="[rules.required, rules.email]" name="email"
+                label="Correo electrónico" outlined prepend-icon="mdi-email" />
+              <v-text-field v-model="editInfo.password" :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="visiblePass ? 'text' : 'password'" :rules="[rules.required]" name="password" label="Contraseña"
+                outlined prepend-icon="mdi-lock" @click:append="visiblePass = !visiblePass" />
               <v-col>
-                <v-select
-                  v-model="editInfo.role"
-                  :items="roles"
-                  label="Rol (1: Administrador || 0: Usuario)"
-                  outlined
-                  prepend-icon="mdi-badge-account"
-                ></v-select>
+                <v-select v-model="editInfo.role" :items="roles" label="Rol (1: Administrador || 0: Usuario)" outlined
+                  prepend-icon="mdi-badge-account"></v-select>
               </v-col>
             </v-form>
           </v-card-text>
@@ -115,12 +74,7 @@
         </v-card>
       </v-dialog>
       <v-row>
-        <v-col
-          v-for="account in accounts"
-          :key="account.id"
-          cols="3"
-          align="center"
-        >
+        <v-col v-for="account in accounts" :key="account.id" cols="3" align="center">
           <v-card class="customCard">
             <v-card-title primary-title>
               {{ account.name }}
@@ -130,18 +84,9 @@
               </v-img>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="#005b96" dark @click="showDescription(account)"
-                >Detalles</v-btn
-              >
-              <v-btn
-                color="yellow darken-1"
-                dark
-                @click="loadAccountToUpdate(account)"
-                >Editar</v-btn
-              >
-              <v-btn color="red" dark @click="deleteAccount(account)"
-                >Eliminar</v-btn
-              >
+              <v-btn color="#005b96" dark @click="showDescription(account)">Detalles</v-btn>
+              <v-btn color="yellow darken-1" dark @click="loadAccountToUpdate(account)">Editar</v-btn>
+              <v-btn color="red" dark :disabled="account.id == session.id ? true : false" @click="deleteAccount(account)">Eliminar</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -161,6 +106,9 @@ export default {
       loading: false,
       visiblePass: false,
       accounts: [],
+      session: {
+        id: 0,
+      },
       currentAccount: {
         name: '',
         lastName: '',
@@ -193,8 +141,18 @@ export default {
   },
   beforeMount() {
     this.loadAccounts()
+    this.loadSession()
   },
   methods: {
+    loadSession() {
+      const accountStr = localStorage.getItem('account')
+      if (accountStr) {
+        const account = JSON.parse(accountStr)
+        this.session.id = `${account.id}`
+      } else {
+        this.$router.push('/')
+      }
+    },
     loadAccounts() {
       const url = 'http://localhost:3001/accounts'
       this.loading = true

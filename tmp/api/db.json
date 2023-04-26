@@ -1,7 +1,7 @@
 {
   "accounts": [
     {
-      "name": "Julián",
+      "name": "JuliánEDIT",
       "lastName": "Herrera Leal",
       "phoneNumber": "3015225831",
       "email": "juliann4567@gmail.com",
@@ -9,6 +9,26 @@
       "role": 1,
       "createDate": "2023-04-17T23:37:20.505Z",
       "id": 1
+    },
+    {
+      "name": "Hugo",
+      "lastName": "herrera",
+      "phoneNumber": "3152825585",
+      "email": "hugoalherrera@hotmail.com",
+      "password": "12345",
+      "role": 0,
+      "createDate": "2023-04-25T22:42:41.228Z",
+      "id": 2
+    },
+    {
+      "name": "Santiago",
+      "lastName": "Urrego",
+      "phoneNumber": "111",
+      "email": "pipeghdez@gmail.com",
+      "password": "12345",
+      "role": 0,
+      "createDate": "2023-04-25T23:06:10.921Z",
+      "id": 3
     }
   ]
 }
