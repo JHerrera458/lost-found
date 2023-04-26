@@ -10,29 +10,32 @@
                 </v-card-title>
                 <v-card-text>
                     <v-divider class="divider"></v-divider>
-                    <v-text-field v-model="registerObject.name" label="Nombre del objeto" outlined></v-text-field>
+                    <v-text-field v-model="registerObject.name" label="Nombre del objeto" outlined
+                        :rules="[rules.required]"></v-text-field>
                     <v-textarea v-model="registerObject.description" label="Descripción del objeto"
-                        hint="Ingrese una descripción del objeto" rows="3" row-height="25" outlined>
+                        hint="Ingrese una descripción del objeto" rows="3" row-height="25" outlined
+                        :rules="[rules.required]">
                     </v-textarea>
-                    <v-text-field v-model="registerObject.foundPlace" label="Lugar dónde se encontró"
-                        outlined></v-text-field>
+                    <v-text-field v-model="registerObject.foundPlace" label="Lugar dónde se encontró" outlined
+                        :rules="[rules.required]"></v-text-field>
                     <v-combobox v-model="registerObject.category" :items="categories" label="Categoria del objeto"
-                        item-text="name" item-value="id" outlined light :menu-props="{ light: true }"></v-comboBox>
+                        item-text="name" item-value="id" outlined light :menu-props="{ light: true }"
+                        :rules="[rules.required]"></v-comboBox>
                     <v-divider class="divider"></v-divider>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn class="green white--text" :disabled="editing"
+                    <v-btn class="green white--text" :disabled="editing" :loading="loading"
                         @click="createObject"><v-icon>mdi-upload</v-icon></v-btn>
-                    <v-btn class="yellow darken-1 white--text" :disabled="!editing"
+                    <v-btn class="yellow darken-1 white--text" :disabled="!editing" :loading="loading"
                         @click="updateObject"><v-icon>mdi-pencil</v-icon></v-btn>
-                    <v-btn class="red white--text" :disabled="!editing"
+                    <v-btn class="red white--text" :disabled="!editing" :loading="loading"
                         @click="deleteObject"><v-icon>mdi-delete</v-icon></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
         <v-row>
             <v-col cols="12">
-                <v-btn color="green">
+                <v-btn color="green" :loading="loading">
                     <h2 @click="openDialog()">Registrar un nuevo objeto perdido</h2>
                 </v-btn>
             </v-col>
@@ -49,7 +52,8 @@
                         </v-img>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="light-blue darken-4" width="100%" class="title" @click="loadObjectToUpdate(object)">
+                        <v-btn color="light-blue darken-4" width="100%" class="title" :loading="loading"
+                            @click="loadObjectToUpdate(object)">
                             Ver
                             detalles</v-btn>
                     </v-card-actions>
@@ -77,6 +81,9 @@ export default {
                 createdBy: 0,
                 createDate: new Date(),
                 isFound: false,
+            },
+            rules: {
+                required: (value) => !!value || 'Este campo es obligatorio',
             },
             updateId: null
         }
@@ -109,10 +116,17 @@ export default {
             this.registerObject.category = ""
         },
         loadCategories() {
+            this.loading = true
             const url = `${process.env.URL_DEV}/objectCategories`
             this.$axios.get(url).then(response => {
                 this.categories = response.data
             }).catch(() => {
+                this.$swal.fire({
+                    icon: 'error',
+                    title: 'Ocurrió un error cargando las categorias',
+                })
+            }).finally(() => {
+                this.loading = false
             })
         },
         createObject() {
@@ -134,9 +148,16 @@ export default {
         },
         loadObjects() {
             const url = `${process.env.URL_DEV}/lostObjects`
+            this.loading = true
             this.$axios.get(url).then(response => {
                 this.objects = response.data
             }).catch(() => {
+                this.$swal.fire({
+                    icon: 'error',
+                    title: 'Ocurrió un error cargando los objetos perdidos',
+                })
+            }).finally(() => {
+                this.loading = false
             })
         },
         loadObjectToUpdate(object) {
@@ -157,8 +178,8 @@ export default {
             this.$axios.put(url, this.registerObject).then(() => {
                 this.$swal.fire({
                     icon: 'success',
-                    title: 'Cuenta actualiza',
-                    text: 'La cuenta fue actualizada exitosamente',
+                    title: 'Objeto actualizado',
+                    text: 'El objeto fue actualizado exitosamente',
                 })
                 this.loadObjects()
                 this.dialogCreateObject = false
@@ -167,7 +188,7 @@ export default {
                 this.$swal.fire({
                     icon: 'error',
                     title: 'Hubo un error',
-                    text: 'No se pudo editar la cuenta',
+                    text: 'No se pudo editar el objeto',
                 })
             }).finally(() => {
                 this.loading = false
@@ -229,5 +250,4 @@ export default {
 .cardText {
     color: #005b96;
     font-size: 100%;
-}
-</style>
+}</style>

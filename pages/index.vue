@@ -248,7 +248,7 @@ export default {
                 'account',
                 JSON.stringify({ id, name, email, phoneNumber, role })
               )
-              this.$router.push('/user/home')
+              this.$router.push('/users/home')
             }
           } else {
             this.$swal.fire({
