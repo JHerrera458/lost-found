@@ -113,7 +113,7 @@ export default {
           }
         })
         .catch(() => {
-          this.accountExist = undefined
+          this.accountExist = null
         })
         .finally(() => {
           this.loading = false
@@ -163,13 +163,13 @@ export default {
       this.$axios
         .get(url)
         .then((response) => {
-          const data = response.data
+          const data = response.data.info
           const found = data.find(
             (account) =>
               account.email === this.email && account.password === this.password
           )
           if (found) {
-            const id = found.id
+            const id = found._id
             const name = found.name
             const email = found.email
             const phoneNumber = found.phoneNumber
