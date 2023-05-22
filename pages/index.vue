@@ -12,40 +12,16 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="formLoginAccount" v-model="formLoginAccount" />
-            <v-text-field
-              v-model="email"
-              name="email"
-              label="Correo electrónico"
-              outlined
-              prepend-icon="mdi-email"
-            />
-            <v-text-field
-              v-model="password"
-              :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="visiblePass ? 'text' : 'password'"
-              name="password"
-              label="Contraseña"
-              outlined
-              prepend-icon="mdi-lock"
-              @click:append="visiblePass = !visiblePass"
-            />
+            <v-text-field v-model="email" name="email" label="Correo electrónico" outlined prepend-icon="mdi-email" />
+            <v-text-field v-model="password" :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="visiblePass ? 'text' : 'password'" name="password" label="Contraseña" outlined
+              prepend-icon="mdi-lock" @click:append="visiblePass = !visiblePass" />
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              dark
-              class="customBtn"
-              color="#03396c"
-              :loading="loading"
-              @click="loginAccount()"
-            >
+            <v-btn dark class="customBtn" color="#03396c" :loading="loading" @click="loginAccount()">
               Iniciar sesión
             </v-btn>
-            <v-btn
-              dark
-              class="customBtn"
-              color="#005b96"
-              @click="dialog = !dialog"
-            >
+            <v-btn dark class="customBtn" color="#005b96" @click="dialog = !dialog">
               Crear una cuenta
             </v-btn>
           </v-card-actions>
@@ -57,59 +33,22 @@
         <v-card-title> Crea una cuenta nueva </v-card-title>
         <v-card-text>
           <v-form ref="formCreateAccount" v-model="formCreateAccount">
-            <v-text-field
-              v-model="registerInfo.name"
-              :rules="[rules.required]"
-              name="name"
-              label="Nombre"
-              outlined
-              prepend-icon="mdi-account"
-            />
-            <v-text-field
-              v-model="registerInfo.lastName"
-              :rules="[rules.required]"
-              name="lastName"
-              label="Apellido"
-              outlined
-              prepend-icon="mdi-account"
-            />
-            <v-text-field
-              v-model="registerInfo.phoneNumber"
-              :rules="[rules.required]"
-              name="number"
-              label="Número de celular"
-              outlined
-              prepend-icon="mdi-phone"
-            />
-            <v-text-field
-              v-model="registerInfo.email"
-              :rules="[rules.required, rules.email]"
-              name="email"
-              label="Correo electrónico"
-              outlined
-              prepend-icon="mdi-email"
-            />
-            <v-text-field
-              v-model="registerInfo.password"
-              :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="visiblePass ? 'text' : 'password'"
-              :rules="[rules.required]"
-              name="password"
-              label="Contraseña"
-              outlined
-              prepend-icon="mdi-lock"
-              @click:append="visiblePass = !visiblePass"
-            />
+            <v-text-field v-model="registerInfo.name" :rules="[rules.required]" name="name" label="Nombre" outlined
+              prepend-icon="mdi-account" />
+            <v-text-field v-model="registerInfo.lastName" :rules="[rules.required]" name="lastName" label="Apellido"
+              outlined prepend-icon="mdi-account" />
+            <v-text-field v-model="registerInfo.phoneNumber" :rules="[rules.required]" name="number"
+              label="Número de celular" outlined prepend-icon="mdi-phone" />
+            <v-text-field v-model="registerInfo.email" :rules="[rules.required, rules.email]" name="email"
+              label="Correo electrónico" outlined prepend-icon="mdi-email" />
+            <v-text-field v-model="registerInfo.password" :append-icon="visiblePass ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="visiblePass ? 'text' : 'password'" :rules="[rules.required]" name="password" label="Contraseña"
+              outlined prepend-icon="mdi-lock" @click:append="visiblePass = !visiblePass" />
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            dark
-            color="#005b96"
-            :loading="loading"
-            @click="createAccount()"
-          >
+          <v-btn dark color="#005b96" :loading="loading" @click="createAccount()">
             Crear una cuenta
           </v-btn>
         </v-card-actions>
@@ -158,11 +97,12 @@ export default {
       localStorage.clear()
     },
     async validateAccountExistance() {
-      const url = `${process.env.URL_DEV}/accounts`
+      const url = `${process.env.URL_DEV}/users`
+      this.loading = true
       await this.$axios
         .get(url)
         .then((response) => {
-          const data = response.data
+          const data = response.data.info
           const found = data.find(
             (account) => account.email === this.registerInfo.email
           )
@@ -173,9 +113,11 @@ export default {
           }
         })
         .catch(() => {
-          this.accountExist = true
+          this.accountExist = undefined
         })
-        .finally(() => {})
+        .finally(() => {
+          this.loading = false
+        })
     },
     async createAccount() {
       const refFormCreateAccount = this.$refs.formCreateAccount
@@ -190,7 +132,7 @@ export default {
             })
           } else {
             this.loading = true
-            const url = `${process.env.URL_DEV}/accounts`
+            const url = `${process.env.URL_DEV}/users`
             this.$axios
               .post(url, this.registerInfo)
               .then(() => {
@@ -216,7 +158,7 @@ export default {
       }
     },
     loginAccount() {
-      const url = `${process.env.URL_DEV}/accounts`
+      const url = `${process.env.URL_DEV}/users`
       this.loading = true
       this.$axios
         .get(url)

@@ -52,17 +52,14 @@ export default {
 .spacer {
   margin-bottom: 120px;
 }
-
 .divider {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 .title {
   color: white;
   font-size: 100%;
 }
-
 .cardText {
   color: #005b96;
   font-size: 100%;
