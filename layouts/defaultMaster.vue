@@ -57,7 +57,7 @@ export default {
     }
   },
   beforeMount() {
-    // this.loadAccount()
+    this.loadAccount()
   },
   methods: {
     loadAccount() {

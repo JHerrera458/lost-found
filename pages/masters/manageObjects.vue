@@ -42,7 +42,7 @@
         </v-row>
         <v-divider class="divider"></v-divider>
         <v-row>
-            <v-col v-for="object in objects" :key="object.id" cols="2" align="center">
+            <v-col v-for="object in objects" :key="object._id" cols="2" align="center">
                 <v-card color="white">
                     <v-card-title primary-title>
                         <h2 class="cardText">{{ object.name }}</h2>
@@ -119,7 +119,7 @@ export default {
             this.loading = true
             const url = `${process.env.URL_DEV}/objectCategories`
             this.$axios.get(url).then(response => {
-                this.categories = response.data
+                this.categories = response.data.info
             }).catch(() => {
                 this.$swal.fire({
                     icon: 'error',
@@ -131,7 +131,7 @@ export default {
         },
         createObject() {
             this.loading = true
-            const url = `${process.env.URL_DEV}/lostObjects`
+            const url = `${process.env.URL_DEV}/objects`
             this.$axios.post(url, this.registerObject).then(() => {
                 this.$swal.fire('Objeto perdido creado!', 'Exitosamente!', 'success')
                 this.loadObjects()
@@ -147,10 +147,10 @@ export default {
             })
         },
         loadObjects() {
-            const url = `${process.env.URL_DEV}/lostObjects`
+            const url = `${process.env.URL_DEV}/objects`
             this.loading = true
             this.$axios.get(url).then(response => {
-                this.objects = response.data
+                this.objects = response.data.info
             }).catch(() => {
                 this.$swal.fire({
                     icon: 'error',
@@ -163,7 +163,7 @@ export default {
         loadObjectToUpdate(object) {
             this.editing = true
             this.dialogCreateObject = true
-            this.updateId = object.id
+            this.updateId = object._id
             this.registerObject.name = object.name
             this.registerObject.description = object.description
             this.registerObject.foundPlace = object.foundPlace
@@ -173,7 +173,7 @@ export default {
             this.registerObject.isFound = object.isFound
         },
         updateObject() {
-            const url = `${process.env.URL_DEV}/lostObjects/${this.updateId}`
+            const url = `${process.env.URL_DEV}/objects/${this.updateId}`
             this.loading = true
             this.$axios.put(url, this.registerObject).then(() => {
                 this.$swal.fire({
@@ -205,7 +205,7 @@ export default {
                 confirmButtonText: 'Si',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = `${process.env.URL_DEV}/lostObjects/${this.updateId}`
+                    const url = `${process.env.URL_DEV}/objects/${this.updateId}`
                     this.loading = true
                     this.$axios.delete(url).then((response) => {
                         this.$swal.fire({

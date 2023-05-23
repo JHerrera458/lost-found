@@ -74,7 +74,7 @@
         </v-card>
       </v-dialog>
       <v-row>
-        <v-col v-for="account in accounts" :key="account.id" cols="3" align="center">
+        <v-col v-for="account in accounts" :key="account._id" cols="3" align="center">
           <v-card class="customCard">
             <v-card-title primary-title>
               {{ account.name }}
@@ -85,7 +85,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn color="yellow darken-1" dark @click="loadAccountToUpdate(account)">Editar</v-btn>
-              <v-btn color="red" dark :disabled="account.id == session.id ? true : false" @click="deleteAccount(account)">Eliminar</v-btn>
+              <v-btn color="red" dark :disabled="account._id == session.id ? true : false" @click="deleteAccount(account)">Eliminar</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -153,12 +153,12 @@ export default {
       }
     },
     loadAccounts() {
-      const url = 'http://localhost:3001/accounts'
+      const url = `${process.env.URL_DEV}/users`
       this.loading = true
       this.$axios
         .get(url)
         .then((response) => {
-          this.accounts = response.data
+          this.accounts = response.data.info
         })
         .catch(() => {
           this.$swal.fire({
@@ -173,7 +173,7 @@ export default {
     },
     showDescription(account) {
       this.dialogDetails = true
-      this.currentAccount.id = account.id
+      this.currentAccount.id = account._id
       this.currentAccount.name = account.name
       this.currentAccount.lastName = account.lastName
       this.currentAccount.phoneNumber = account.phoneNumber
@@ -187,7 +187,7 @@ export default {
     deleteAccount(account) {
       this.$swal
         .fire({
-          title: `¿Seguro de eliminar la cuenta: ${account.name}? con ID: ${account.id}`,
+          title: `¿Seguro de eliminar la cuenta: ${account.name}? con ID: ${account._id}`,
           text: 'El usuario se eliminará y no se puede recuperar',
           icon: 'warning',
           showCancelButton: true,
@@ -197,14 +197,14 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            const url = `http://localhost:3001/accounts/${account.id}`
+            const url = `${process.env.URL_DEV}/users/${account._id}`
             this.loading = true
             this.$axios
               .delete(url)
               .then((response) => {
                 this.$swal.fire({
                   title: 'Cuenta eliminada',
-                  text: `El usuario ${account.name} ID: ${account.id} se ha eliminado.`,
+                  text: `El usuario ${account.name} ID: ${account._id} se ha eliminado.`,
                   icon: 'success',
                 })
                 this.loadAccounts()
@@ -231,10 +231,10 @@ export default {
       this.editInfo.password = account.password
       this.editInfo.role = account.role
       this.editInfo.createDate = account.createDate
-      this.editInfo.id = account.id
+      this.editInfo.id = account._id
     },
     updateAccount() {
-      const url = `http://localhost:3001/accounts/${this.editInfo.id}`
+      const url = `${process.env.URL_DEV}/users/${this.editInfo.id}`
       this.loading = true
       this.$axios
         .put(url, this.editInfo)
